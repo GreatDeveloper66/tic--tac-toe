@@ -18,7 +18,15 @@ class Board extends React.Component {
   render(){
     return(
       <div className="Board">
-        Board
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
+        <Square />
       </div>
     );
   }
@@ -32,6 +40,19 @@ class Status extends React.Component {
     return(
       <div className="Status">
         Status
+      </div>
+    );
+  }
+}
+
+class Square extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return(
+      <div className="Square">
+        Square
       </div>
     );
   }

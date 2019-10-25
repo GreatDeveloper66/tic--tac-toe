@@ -24,3 +24,13 @@
   align-items: center;
 
 }
+
+.Square {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template: 1fr/1fr;
+  border: 3px solid red;
+  justify-items: center;
+  align-items: center;
+}
