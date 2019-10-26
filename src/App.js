@@ -14,7 +14,7 @@ class App extends React.Component {
     return(
       <div className="App">
         <Status />
-        <Board />
+        <Board layout={this.state.squares} />
       </div>
     );
   }
@@ -27,15 +27,15 @@ class Board extends React.Component {
   render(){
     return(
       <div className="Board">
-        <Square />
-        <Square />
-        <Square />
-        <Square />
-        <Square />
-        <Square />
-        <Square />
-        <Square />
-        <Square />
+        <Square status={this.props.layout[0]}/>
+        <Square status={this.props.layout[1]}/>
+        <Square status={this.props.layout[2]}/>
+        <Square status={this.props.layout[3]}/>
+        <Square status={this.props.layout[4]}/>
+        <Square status={this.props.layout[5]}/>
+        <Square status={this.props.layout[6]}/>
+        <Square status={this.props.layout[7]}/>
+        <Square status={this.props.layout[8]}/>
       </div>
     );
   }
@@ -61,7 +61,7 @@ class Square extends React.Component {
   render(){
     return(
       <div className="Square">
-        Square
+        {this.props.status}
       </div>
     );
   }
