@@ -10,7 +10,6 @@ class App extends React.Component {
     this.clickSquare = this.clickSquare.bind(this);
   }
   clickSquare(i){
-    window.alert("hello hello hello");
     const squares = this.state.squares.slice();
     squares[i] = 'X';
     this.setState({squares: squares});
@@ -19,43 +18,20 @@ class App extends React.Component {
   render(){
     return(
       <div className="App">
-        <Status />
-        <Board layout={this.state.squares} onClick={() => this.clickSquare(0)}/>
-      </div>
-    );
-  }
-}
-
-class Board extends React.Component {
-  constructor(props){
-    super(props);
-  }
-
-  render(){
-    return(
-      <div className="Board" onClick={this.props.onClick}>
-        <Square status={this.props.layout[0]} />
-        <Square status={this.props.layout[1]} />
-        <Square status={this.props.layout[2]} />
-        <Square status={this.props.layout[3]} />
-        <Square status={this.props.layout[4]} />
-        <Square status={this.props.layout[5]} />
-        <Square status={this.props.layout[6]} />
-        <Square status={this.props.layout[7]} />
-        <Square status={this.props.layout[8]} />
-      </div>
-    );
-  }
-}
-
-class Status extends React.Component {
-  constructor(props){
-    super(props);
-  }
-  render(){
-    return(
-      <div className="Status">
-        Status
+        <div className="Status">
+          Status
+        </div>
+        <div className="Board" >
+            <Square status={this.state.squares[0]} onClick={() => this.clickSquare(0)} />
+            <Square status={this.state.squares[1]} onClick={() => this.clickSquare(1)}/>
+            <Square status={this.state.squares[2]} onClick={() => this.clickSquare(2)}/>
+            <Square status={this.state.squares[3]} onClick={() => this.clickSquare(3)}/>
+            <Square status={this.state.squares[4]} onClick={() => this.clickSquare(4)}/>
+            <Square status={this.state.squares[5]} onClick={() => this.clickSquare(5)}/>
+            <Square status={this.state.squares[6]} onClick={() => this.clickSquare(6)}/>
+            <Square status={this.state.squares[7]} onClick={() => this.clickSquare(7)}/>
+            <Square status={this.state.squares[8]} onClick={() => this.clickSquare(8)}/>
+        </div>
       </div>
     );
   }
@@ -67,7 +43,7 @@ class Square extends React.Component {
   }
   render(){
     return(
-      <div className="Square">
+      <div className="Square" onClick={this.props.onClick}>
         {this.props.status}
       </div>
     );
