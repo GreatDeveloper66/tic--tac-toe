@@ -20,6 +20,7 @@ class App extends React.Component {
       gameOver: false
     }
     this.clickSquare = this.clickSquare.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
   clickSquare(i) {
     const squares = this.state.squares.slice();
@@ -45,12 +46,29 @@ class App extends React.Component {
     }
 
   }
+  handleReset() {
+    this.setState({
+      squares: [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      message: "Pick a Square",
+      gameOver: false
+    })
+  }
 
   render() {
     return (<div className="App">
       <div className="Status">
         {this.state.message}
-        <button>Reset</button>
+        <button onClick={this.handleReset}>Reset</button>
       </div>
       <div className="Board">
         <Square status={this.state.squares[0]} onClick={() => this.clickSquare(0)}/>
