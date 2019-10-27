@@ -12,6 +12,13 @@ class App extends React.Component {
   clickSquare(i){
     const squares = this.state.squares.slice();
     squares[i] = 'X';
+    let randomNum;
+    do {
+      randomNum = Math.floor(Math.random()*9);
+    }
+    while(squares[randomNum] !== "");
+    squares[randomNum] = 'O';
+
     this.setState({squares: squares});
   }
 
