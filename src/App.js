@@ -2,60 +2,112 @@ import React from 'react';
 import './App.css';
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      squares: ["","X","O","","","","","",""]
+      squares: [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      message: "Pick a Square"
     }
     this.clickSquare = this.clickSquare.bind(this);
   }
-  clickSquare(i){
+  clickSquare(i) {
     const squares = this.state.squares.slice();
-    squares[i] = 'X';
-    let randomNum;
-    do {
-      randomNum = Math.floor(Math.random()*9);
-    }
-    while(squares[randomNum] !== "");
-    squares[randomNum] = 'O';
+    if (squares[i] === "") {
 
-    this.setState({squares: squares});
+      squares[i] = 'X';
+      let randomNum;
+      do {
+        randomNum = Math.floor(Math.random() * 9);
+      } while (squares[randomNum] !== "");
+      squares[randomNum] = 'O';
+
+      let gameStatus = calculateWinner(squares);
+
+      let winnerMessage = gameStatus
+        ? gameStatus.toString() + " is the winner"
+        : !squares.includes("") ? "It was a draw" :
+        "Pick a Square";
+
+      this.setState({squares: squares, message: winnerMessage});
+    }
+
   }
 
-  render(){
-    return(
-      <div className="App">
-        <div className="Status">
-          Status
-        </div>
-        <div className="Board" >
-            <Square status={this.state.squares[0]} onClick={() => this.clickSquare(0)} />
-            <Square status={this.state.squares[1]} onClick={() => this.clickSquare(1)}/>
-            <Square status={this.state.squares[2]} onClick={() => this.clickSquare(2)}/>
-            <Square status={this.state.squares[3]} onClick={() => this.clickSquare(3)}/>
-            <Square status={this.state.squares[4]} onClick={() => this.clickSquare(4)}/>
-            <Square status={this.state.squares[5]} onClick={() => this.clickSquare(5)}/>
-            <Square status={this.state.squares[6]} onClick={() => this.clickSquare(6)}/>
-            <Square status={this.state.squares[7]} onClick={() => this.clickSquare(7)}/>
-            <Square status={this.state.squares[8]} onClick={() => this.clickSquare(8)}/>
-        </div>
+  render() {
+    return (<div className="App">
+      <div className="Status">
+        {this.state.message}
       </div>
-    );
+      <div className="Board">
+        <Square status={this.state.squares[0]} onClick={() => this.clickSquare(0)}/>
+        <Square status={this.state.squares[1]} onClick={() => this.clickSquare(1)}/>
+        <Square status={this.state.squares[2]} onClick={() => this.clickSquare(2)}/>
+        <Square status={this.state.squares[3]} onClick={() => this.clickSquare(3)}/>
+        <Square status={this.state.squares[4]} onClick={() => this.clickSquare(4)}/>
+        <Square status={this.state.squares[5]} onClick={() => this.clickSquare(5)}/>
+        <Square status={this.state.squares[6]} onClick={() => this.clickSquare(6)}/>
+        <Square status={this.state.squares[7]} onClick={() => this.clickSquare(7)}/>
+        <Square status={this.state.squares[8]} onClick={() => this.clickSquare(8)}/>
+      </div>
+    </div>);
   }
 }
 
 class Square extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
-  render(){
-    return(
-      <div className="Square" onClick={this.props.onClick}>
-        {this.props.status}
-      </div>
-    );
+  render() {
+    return (<div className="Square" onClick={this.props.onClick}>
+      {this.props.status}
+    </div>);
   }
 }
 
+function calculateWinner(squares) {
+  const lines = [
+    [
+      0, 1, 2
+    ],
+    [
+      3, 4, 5
+    ],
+    [
+      6, 7, 8
+    ],
+    [
+      0, 3, 6
+    ],
+    [
+      1, 4, 7
+    ],
+    [
+      2, 5, 8
+    ],
+    [
+      0, 4, 8
+    ],
+    [
+      2, 4, 6
+    ]
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
 
 export default App;
