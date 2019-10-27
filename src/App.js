@@ -16,13 +16,15 @@ class App extends React.Component {
         "",
         ""
       ],
-      message: "Pick a Square"
+      message: "Pick a Square",
+      gameOver: false
     }
     this.clickSquare = this.clickSquare.bind(this);
   }
   clickSquare(i) {
     const squares = this.state.squares.slice();
-    if (squares[i] === "") {
+    let gameOver = this.state.gameOver;
+    if (squares[i] === "" && !gameOver) {
 
       squares[i] = 'X';
       let randomNum;
@@ -35,10 +37,11 @@ class App extends React.Component {
 
       let winnerMessage = gameStatus
         ? gameStatus.toString() + " is the winner"
-        : !squares.includes("") ? "It was a draw" :
-        "Pick a Square";
-
-      this.setState({squares: squares, message: winnerMessage});
+        : !squares.includes("")
+          ? "It was a draw"
+          : "Pick a Square";
+      gameOver = !squares.includes("") || gameStatus;
+      this.setState({squares: squares, message: winnerMessage, gameOver: gameOver});
     }
 
   }
@@ -47,6 +50,7 @@ class App extends React.Component {
     return (<div className="App">
       <div className="Status">
         {this.state.message}
+        <button>Reset</button>
       </div>
       <div className="Board">
         <Square status={this.state.squares[0]} onClick={() => this.clickSquare(0)}/>
