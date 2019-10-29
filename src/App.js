@@ -24,27 +24,27 @@ class App extends React.Component {
   }
   clickSquare(i) {
     const squares = this.state.squares.slice();
-    let gameOver = this.state.gameOver;
-    if (squares[i] === "" && !gameOver) {
+    if(squares[i] === "" && !this.state.gameOver){
+      squares[i] = 'X'
+      if(squares.includes("")){
+        let randomNum;
+        do {
+          randomNum = Math.floor(Math.random() * 9);
+        } while (squares[randomNum] !== "");
+        squares[randomNum] = 'O';
+      }
 
-      squares[i] = 'X';
-      let randomNum;
-      do {
-        randomNum = Math.floor(Math.random() * 9);
-      } while (squares[randomNum] !== "");
-      squares[randomNum] = 'O';
+      let winner = calculateWinner(squares);
 
-      let gameStatus = calculateWinner(squares);
-
-      let winnerMessage = gameStatus
-        ? gameStatus.toString() + " is the winner"
+      let winnerMessage = winner
+        ? winner.toString() + " is the winner"
         : !squares.includes("")
           ? "It was a draw"
           : "Pick a Square";
-      gameOver = !squares.includes("") || gameStatus;
+      let gameOver = !squares.includes("") || winner;
       this.setState({squares: squares, message: winnerMessage, gameOver: gameOver});
-    }
 
+  }
   }
   handleReset() {
     this.setState({
