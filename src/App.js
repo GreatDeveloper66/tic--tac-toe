@@ -100,6 +100,9 @@ class App extends React.Component {
 
   render() {
     return (<div className="App">
+      <div className = "header">
+        Tic-Tac-Toe
+      </div>
       <div className="Status">
         {this.state.message}
         <button onClick={this.handleReset}>Reset</button>
