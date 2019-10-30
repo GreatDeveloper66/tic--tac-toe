@@ -24,14 +24,48 @@ class App extends React.Component {
   }
   clickSquare(i) {
     const squares = this.state.squares.slice();
-    if(squares[i] === "" && !this.state.gameOver){
+    function findWin(squares) {
+      let squaresCopy = squares.slice();
+      for (let i = 0; i < 9; i++) {
+        if (squaresCopy[i] === "") {
+          squaresCopy[i] = 'O';
+          if (calculateWinner(squaresCopy)) {
+            return i;
+          } else {
+            squaresCopy[i] = "";
+          }
+        }
+      }
+      return null;
+    }
+    function findBlock(squares) {
+      let squaresCopy = squares.slice();
+      for (let i = 0; i < 9; i++) {
+        if (squaresCopy[i] === "") {
+          squaresCopy[i] = 'X';
+          if (calculateWinner(squaresCopy)) {
+            return i;
+          } else {
+            squaresCopy[i] = "";
+          }
+        }
+      }
+      return null;
+    }
+    function findRandom(squares) {
+      let randomNum;
+      do {
+        randomNum = Math.floor(Math.random() * 9);
+      } while (squares[randomNum] !== "");
+      return randomNum;
+    }
+
+    const findSquare = squares => findWin(squares) || findBlock(squares) || findRandom(squares);
+
+    if (squares[i] === "" && !this.state.gameOver) {
       squares[i] = 'X'
-      if(squares.includes("")){
-        let randomNum;
-        do {
-          randomNum = Math.floor(Math.random() * 9);
-        } while (squares[randomNum] !== "");
-        squares[randomNum] = 'O';
+      if (squares.includes("")) {
+        squares[findSquare(squares)] = 'O';
       }
 
       let winner = calculateWinner(squares);
@@ -44,7 +78,7 @@ class App extends React.Component {
       let gameOver = !squares.includes("") || winner;
       this.setState({squares: squares, message: winnerMessage, gameOver: gameOver});
 
-  }
+    }
   }
   handleReset() {
     this.setState({
